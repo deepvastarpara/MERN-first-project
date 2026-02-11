@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import User from "../models/User.js";
 import { generateToken } from "../utils/generateToken.js";
-import { sendEmail } from "../services/emailService.js";
+import { sendOtpEmail } from "../services/emailService.js";
 
 /* REGISTER */
 export const register = async (req, res) => {
@@ -22,7 +22,7 @@ export const register = async (req, res) => {
       otpExpiry: Date.now() + 10 * 60 * 1000
     });
 
-    await sendEmail(email, otp);
+    await sendOtpEmail(email, otp);
     res.json({ message: "OTP sent to email" });
   } catch (error) {
     res.status(500).json({ message: "Registration failed" });

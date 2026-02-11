@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
 
-export const sendEmail = async (email, otp) => {
+export const sendOtpEmail = async (email, otp, type = "verify") => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -9,10 +9,14 @@ export const sendEmail = async (email, otp) => {
     }
   });
 
+  const subject =
+    type === "reset" ? "Password Reset OTP" : "Email Verification OTP";
+
+
   await transporter.sendMail({
     from: process.env.EMAIL,
     to: email,
-    subject: "OTP Verification",
+    subject: subject,
     text: `Your OTP is ${otp}. It is valid for 10 minutes.`
   });
 };
