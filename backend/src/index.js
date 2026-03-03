@@ -20,7 +20,10 @@ app.use("/api/auth", authRoutes);
 app.use("/api", protectedRoutes);
 app.use("/api/password", passwordRoutes);
 
-app.listen(process.env.PORT, () =>
-  console.log(`Server running on port ${process.env.PORT}`)
-);
+if (process.env.NODE_ENV !== "production") {
+  app.listen(process.env.PORT, () =>
+    console.log(`Server running on port ${process.env.PORT}`)
+  );
+}
 
+export default app;
